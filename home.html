@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>tinyRPG</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Piotr Giedziun">
+
+    <!-- Le styles -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+    </style>
+    <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="/">tinyRPG</a>
+            <div class="nav-collapse">
+                <ul class="nav">
+                    <li class="active"><a href="/login">Login</a></li>
+					<li><a href="/facebook">Create account</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <form class="well form-inline" method="POST" action="/login">
+		{% if error != "" %}
+        <div class="alert alert-error">
+            {{ escape(error) }}
+        </div>
+        {% end %}
+		{% if success != "" %}
+	    <div class="alert alert-success">
+	    	{{ escape(success) }}
+	    </div>
+	    {% end %}
+		{% raw xsrf_form_html() %}
+	  <input type="text" class="input-small" name="login" placeholder="Login">
+	  <input type="password" class="input-small" name="password" placeholder="Password">
+	  <label class="checkbox">
+	    <input type="checkbox"> Remember me
+	  </label>
+	  <button type="submit" class="btn">Sign in</button>
+	</form>
+	
+    <div class="hero-unit">
+      <h1>Welcome, Adventurer!</h1>
+      <p>This is just sample of tinyRPG engine. If you want to find out more about current progress visit project' github page or follow me on Twitter.</p>
+      <p></p>
+	  <p><a href="http://twitter.com/piotrgiedziun" class="btn btn-inverse btn-large">Twitter (@piotrgiedziun)</a> <a href="https://github.com/piotrgiedziun/tinyRPG" class="btn btn-inverse btn-large">Source Code</a> <a href="/facebook" class="btn btn-primary btn-large">JOIN US! <strong>FREE</strong></a></p>
+    </div>
+
+    <hr>
+
+    <footer>
+        <p>&copy; 2012</p>
+    </footer>
+
+</div> <!-- /container -->
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script src="assets/js/bootstrap-modal.js"></script>
+</body>
+</html>
