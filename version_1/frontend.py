@@ -19,10 +19,10 @@ class AuthRequestHandler(tornado.web.RequestHandler):
 		else:
 			return None
 
-class DebugHandler(AuthRequestHandler):
+class MapHandler(AuthRequestHandler):
 	@tornado.web.authenticated
-	def get(self):
-			self.render("script.html")
+	def get(self, map_id):
+		self.render("assets/maps/map_%s.json" % (map_id,))
 		
 class CreateAccountHandler(AuthRequestHandler):
 	def prepare(self):

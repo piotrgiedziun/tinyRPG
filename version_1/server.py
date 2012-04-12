@@ -15,7 +15,7 @@ define("cache_time", default=60, type=int)
 def main():
 	tornado.options.parse_command_line()
 	application = tornado.web.Application([
-		(r"/debug", frontend.DebugHandler),
+		(r"/map/([0-9]+)", frontend.MapHandler),
     	(r"/socket", backend.ClientSocket),
 		(r"/login", frontend.LoginHandler),
 		(r"/logout", frontend.LogoutHandler),

@@ -65,8 +65,9 @@
     <!-- Main hero unit for a primary marketing message or call to action -->
     <div class="hero-unit">
         <div id="canvasHolder">
-            <canvas id="mapCanvas" width="896" height="580"></canvas>
+            <canvas id="mapUnderCanvas" width="896" height="580"></canvas>
             <canvas id="testCanvas" width="896" height="580"></canvas>
+			<canvas id="mapAboveCanvas" width="896" height="580"></canvas>
             <div id="messageBox">
                 <div id="log">Loading...</div>
                 <input type="text" id="entery" onkeydown="if (event.keyCode == 13){message()}" onblur="message_blur();"/>
@@ -88,7 +89,7 @@
 <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
 <script src="assets/js/bootstrap-modal.js"></script>
 <script src="assets/js/bootstrap-dropdown.js"></script>
-<script src="assets/js/bootstrap-collapse"></script>
+<script src="assets/js/bootstrap-collapse.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js"></script>
 <!-- Import EaselJS Framework -->
 <script src="assets/js/easeljs/utils/UID.js"></script>

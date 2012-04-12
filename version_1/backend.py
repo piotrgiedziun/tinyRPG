@@ -36,7 +36,7 @@ class ClientSocket(AuthWebSocketHandler):
 		if not player:
 			raise tornado.web.HTTPError(500)
 			
-		self.player = Player(player.id, player.name, 3, 1, "D")
+		self.player = Player(player.id, player.name, 10, 8, "D")
 		
 		self.write_message(self.player.aboutRequestData())
 

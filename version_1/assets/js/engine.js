@@ -15,6 +15,8 @@ var websocket;
 var playerSpriteSheet;
 var map;
 var playerSprites;
+var screen_start_x = 0;
+var screen_start_y = 0;
 
 function init() {
 	//load sprites
@@ -27,8 +29,11 @@ function init() {
 	playerSprites.load(["assets/img/character_1.png", "assets/img/character_2.png", "assets/img/character_3.png"]);
 	
     map = new Map();
-	map.bitmap = document.getElementById("mapCanvas").getContext('2d');
+	map.id = 2;
+	map.underBitmap = document.getElementById("mapUnderCanvas").getContext('2d');
+	map.aboveBitmap = document.getElementById("mapAboveCanvas").getContext('2d');
     canvas = document.getElementById("testCanvas");
+	topCanvas = document.getElementById("mapAboveCanvas");
     stage = new Stage(canvas);
 
 	if (Touch.isSupported()) { Touch.enable(stage); }
@@ -40,7 +45,7 @@ function create_game(r) {
 	//read r
 	character = new Player(r.id, r.name, r.x, r.y, true);
 
-    canvas.onclick = function(e) {
+    topCanvas.onclick = function(e) {
         e = e || window.event;
         var pos = getPos(this),
         x =  Math.floor( (e.pageX - pos.x)/32 ),
@@ -49,7 +54,9 @@ function create_game(r) {
         character.goTo(map.findPath(character.x, character.y, x, y));
     };
 
-	draw_map();
+	//since we know map id
+	map.loadMap("http://"+SITE_URL+"/map/"+map.id, draw_map);
+	
 	// create spritesheet and assign the associated data.
     playerSpriteSheet  = new SpriteSheet({
         images: playerSprites.get(),
@@ -157,16 +164,39 @@ function connect() {
 
 function draw_map() {
     map.image = new Image();
-    map.image.src = "assets/img/bg.png";
+    map.image.src = "assets/maps/map_"+map.id+".png";
     map.image.onload = function() {
-
-        for(var y=0; y<18; y++) {
-            for(var x=0; x<28; x++) {
-                map.bitmap.drawImage(this, 32*map.getElementId(x, y), 0, 32, 32, x*32, y*32, 32, 32);
-            }
-        }
+		//count elements per line
+		var epl = map.image.width/32;
+		var el;
+		//under
+		for(var l=0; l<map.getElementUnderId(0,0).length; l++) {
+        	for(var y=0; y<map.height; y++) {
+            	for(var x=0; x<map.width; x++) {
+					el = map.getElementUnderId(x, y, l);
+					if (el == 0) continue;
+					el--;
+					map.underBitmap.drawImage(this, (el % epl)*32, Math.floor(el / epl)*32, 32, 32, x*32, y*32, 32, 32);
+            	}
+        	}
+		}
+		//above
+		for(var l=0; l<map.getElementAboveId(0,0).length; l++) {
+        	for(var y=0; y<18; y++) {
+            	for(var x=0; x<28; x++) {
+					el = map.getElementAboveId(x, y, l);
+					if (el == 0) continue;
+					el--;
+					map.aboveBitmap.drawImage(this, (el % epl)*32, Math.floor(el / epl)*32, 32, 32, x*32, y*32, 32, 32);
+            	}
+        	}
+		}
 
     };
+}
+
+function redraw_map() {
+
 }
 
 function update_position(x, y, direction) {
@@ -178,6 +208,9 @@ function update_position(x, y, direction) {
             direction: direction
     });
     websocket.send(string);
+
+	//
+	redraw_map();
 }
 
 function create_player() {
