@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="well">
+  <canvas id="mapUnderCanvas" width="896" height="580"></canvas>
+</div>
+{% end %}
+
+{% block js %}
+<script src="game/sjsi.js"></script>
+<script src="game/engine.js"></script>
+<script>
+    $(window).load(function() {
+        var e = new Engine();
+        e.start();
+    });
+</script>
+{% end %}
+
+{% block nav %}
+<div class="nav-collapse">
+    <ul class="nav">
+        <li class="active"><a href="/">Play</a></li>
+		<li><a target="_blank" href="https://github.com/piotrgiedziun/tinyRPG">Source</a></li>
+		<li><a href="/about">About</a></li>
+    </ul>
+
+    <ul class="nav pull-right">
+        <li id="fat-menu" class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi {{ user["name"] }}! <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="#">I like pizza</a></li>
+                <li><a href="#">Friends</a></li>
+                <li><a href="#">Setting</a></li>
+                <li class="divider"></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </li>
+    </ul>
+</div><!--/.nav-collapse -->
+{% end %}

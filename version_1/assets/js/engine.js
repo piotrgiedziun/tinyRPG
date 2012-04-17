@@ -4,6 +4,7 @@ var PLAYER_SPRITE_START_POSITION = 48;
 var SITE_URL = "127.0.0.1:8888";
 
 var canvas;
+var actionCanvas;
 var mapCanvas;
 var stage;
 var img;
@@ -26,12 +27,14 @@ function init() {
 		console.log("connecting...");
 		connect();
 	});
-	playerSprites.load(["assets/img/character_1.png", "assets/img/character_2.png", "assets/img/character_3.png"]);
+	playerSprites.load(["assets/img/character_2.png", "assets/img/character_2.png", "assets/img/character_3.png"]);
 	
     map = new Map();
 	map.id = 2;
 	map.underBitmap = document.getElementById("mapUnderCanvas").getContext('2d');
 	map.aboveBitmap = document.getElementById("mapAboveCanvas").getContext('2d');
+	
+	actionCanvas = document.getElementById("actionCanvas").getContext('2d');
     canvas = document.getElementById("testCanvas");
 	topCanvas = document.getElementById("mapAboveCanvas");
     stage = new Stage(canvas);
@@ -216,10 +219,9 @@ function update_position(x, y, direction) {
 function create_player() {
     //draw player
     character.bitmap = new BitmapAnimation(playerSpriteSheet);
-    character.bitmap.gotoAndPlay("stopR");
+    character.bitmap.gotoAndPlay(character.direction);
 
-    character.bitmap.x = character.x*32;
-    character.bitmap.y = character.y*32;
+    character._setPos(character.x, character.y, true);
 
     stage.addChild(character.bitmap);
 }
@@ -264,6 +266,7 @@ document.onkeydown = function(e) {
 
 function request_full_screen() {
     var elem = document.getElementById("canvasHolder");
+    elem.webkitRequestFullScreen();
     elem.onwebkitfullscreenchange = function () {
 
     };

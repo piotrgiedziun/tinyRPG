@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form class="well form-inline" method="POST" action="/login">
+	{% if error != "" %}
+    <div class="alert alert-error">
+        {{ escape(error) }}
+    </div>
+    {% end %}
+	{% if success != "" %}
+    <div class="alert alert-success">
+    	{{ escape(success) }}
+    </div>
+    {% end %}
+	{% raw xsrf_form_html() %}
+  <input type="text" class="input-small" name="login" placeholder="Login">
+  <input type="password" class="input-small" name="password" placeholder="Password">
+  <label class="checkbox">
+    <input type="checkbox"> Remember me
+  </label>
+  <button type="submit" class="btn">Sign in</button>
+</form>
+
+<div class="hero-unit well">
+  <h1>Welcome, Adventurer!</h1>
+  <p>This is just sample of tinyRPG engine. If you want to find out more about current progress visit project' github page or follow me on Twitter.</p>
+  <p></p>
+  <p><a href="http://twitter.com/piotrgiedziun" class="btn btn-inverse btn-large">Twitter (@piotrgiedziun)</a> <a href="https://github.com/piotrgiedziun/tinyRPG" class="btn btn-inverse btn-large">Source Code</a> <a href="/facebook" class="btn btn-primary btn-large">JOIN US! <strong>FREE</strong></a></p>
+</div>
+{% end %}
+
+{% block nav %}
+<div class="nav-collapse">
+      <ul class="nav">
+          <li class="active"><a href="/login">Login</a></li>
+      </ul>
+  </div><!--/.nav-collapse -->
+{% end %}

@@ -10,7 +10,7 @@ var Player = Class.create( {
         this.visible = false;
         this.path = undefined;
         this.isMoving = false;
-        this.direction;
+        this.direction = "stopU";
         this.speed = 4;
 		this.isNameShowed = false;
     },
@@ -93,7 +93,7 @@ var Player = Class.create( {
 		if(this.isNameShowed) {
 			nameLabel.text = this.name;
 			nameLabel.x = this.bitmap.x;
-			nameLabel.y = this.bitmap.y-10;
+			nameLabel.y = this.bitmap.y-15;
 		}
         //check if there is movement action
         if(this.isMoving) {
